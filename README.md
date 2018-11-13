@@ -1,1 +1,1 @@
-# chatApp
+This is a Simple chat app with NodeJs

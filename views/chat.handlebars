@@ -1,0 +1,44 @@
+  <body>
+    <div class = "container-fluid chat">
+      <h1>Chat box <small>make friends!</small></h1>
+
+      <div class ="row">
+        <div class="col-sm-6">
+          <input type="hidden" name="country" id="user" value="{{user}}">
+          <div class="panel panel-default">
+              <div class="panel-heading">Grpup Chat <small style="float: right">username : <strong id="username">{{user}}</strong></small></div>
+              <div class="panel-body fixed-size" id = "group-chat">
+                <ul class="messages" id="gc">
+                  
+                </ul>
+                </div>
+              <div class="panel-footer">
+                <input type="text" class="form-control" placeholder="Enter your message" id="msg">
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Active</div>
+            <div class="panel-body fixed-size">
+              <ul class="list-group" id="active-users">
+              </ul>
+            </div>
+          </div>
+        </div>
+      <div class="col-sm-4">
+        <div class="panel panel-default">
+              <div class="panel-heading">Private Chat</div>
+              <div class="panel-body fixed-size">Coming not soon enough...</div>
+              <div class="panel-footer">
+                <input type="text" class="form-control" placeholder="Enter your message" disabled>
+              </div>
+            </div>
+      </div>
+      
+    </div>
+    
+  </body>
+
+<script src="/socket.io/socket.io.js"></script>
+       <script type="text/javascript" src="/js/chat.js"></script>

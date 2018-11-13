@@ -1,0 +1,27 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "A simple chatting app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alamin02/chattingApp.git"
+  },
+  "author": "alamin02",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alamin02/chattingApp/issues"
+  },
+  "homepage": "https://github.com/Alamin02/chattingApp#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "http": "0.0.0",
+    "path": "^0.12.7",
+    "socket.io": "^2.0.4"
+  }
+}
