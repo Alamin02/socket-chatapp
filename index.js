@@ -12,7 +12,7 @@ var io = require('socket.io')(http);
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout:'layout'}));
+app.engine('handlebars', exphbs({ defaultLayout: 'layout' }));
 app.set('view engine', 'handlebars');
 
 // BodyParser Middleware
@@ -25,19 +25,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set Port
 app.set('port', (process.env.PORT || 3000));
 
-http.listen(app.get('port'), function(){
-  console.log('Server started on port '+app.get('port'));
+http.listen(app.get('port'), function () {
+	console.log('Server started on port ' + app.get('port'));
 });
 
 //set url for home
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
 	res.render('home');
 });
 
 //set url for chatroom
-app.get('/chat', function(req, res){
+app.get('/chat', function (req, res) {
 	var user_name = req.query;
-	if(!users[user_name]){
+	if (!users[user_name]) {
 		console.log(user_name.user);
 		res.render('chat', user_name);
 	}
@@ -49,21 +49,21 @@ var users = [];
 var ids = [];
 
 //checks primary validity
-app.get('/validity', function(req, res){
+app.get('/validity', function (req, res) {
 	console.log(req.query.name);
 	var user_name = req.query.name;
-	if(userValidator(user_name)){
+	if (userValidator(user_name)) {
 		var link = '/chat?user=' + user_name;
 		var data = {
 			link: link,
-			valid : true
+			valid: true
 		}
 		res.send(data);
 	}
 	else {
 		var data = {
 			link: "#",
-			valid : false
+			valid: false
 		}
 		res.send(data);
 	}
@@ -72,52 +72,50 @@ app.get('/validity', function(req, res){
 
 // Socket IO configuration for realtime chatting.
 
-io.on('connection', function(socket){
+io.on('connection', function (socket) {
 
 	console.log('User : ' + socket.id);
 
-	socket.on('new user', function(user){
-		console.log(user);
-		
-		if(userValidator(user)){
+	socket.on('new user', function (user) {
 
+		if (userValidator(user)) {
 			users.push(user);
 			ids.push(socket.id);
 
 			io.emit('new user', {
 				new: user,
-				userlist : users
+				userlist: users
 			});
 		}
-		else{
+		else {
 			console.log("user already exists");
 			socket.disconnect(socket.id);
 		}
 	});
 
-	socket.on('new message', function(msg){
+	socket.on('new message', function (msg) {
 		console.log(msg);
 		io.emit('message rcvd', msg);
 	});
 
-	socket.on('disconnect', function(user){
-   		var userLeft = removeUserByID(socket.id);
-   		console.log( userLeft +' disconnected');
-   		io.emit('user left', {
-				left: userLeft,
-				userlist : users
-			});
-  	});
+	socket.on('disconnect', function (user) {
+		var userLeft = removeUserByID(socket.id);
+		console.log(userLeft + ' disconnected');
+		io.emit('user left', {
+			left: userLeft,
+			userlist: users
+		});
+	});
 });
 
 
-function userValidator(name){
+function userValidator(name) {
 	console.log(users);
-	if(users.indexOf(name) >= 0){
+	if (users.indexOf(name) >= 0) {
 		console.log('Already exists');
 		return false;
 	}
-	else if (name.length < 3 && name.length > 10){
+	else if (name.length < 3 && name.length > 10) {
 		return false;
 	}
 	else {
@@ -126,10 +124,10 @@ function userValidator(name){
 	}
 }
 
-function removeUserByID(id){
+function removeUserByID(id) {
 	var index = ids.indexOf(id);
 	var left = [];
-	if(index >= 0){
+	if (index >= 0) {
 		//remove the damn user
 		left = users[index];
 		users.splice(index, 1);

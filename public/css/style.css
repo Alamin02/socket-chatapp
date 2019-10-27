@@ -1,21 +1,20 @@
-.fixed-size {
-  min-height: 500px;
-  max-height: 500px;
-  overflow-y: scroll;
+.home-page-container {
+  width:400px;
+   margin-right:auto; 
+   margin-left:auto; 
+   border:1px;
+   min-height: 90vh;
 }
 
-
-.messages {
-    list-style-type: none;
-    margin: 0px;
-    padding-left: 0px;
-}
-.fixed-size {
-  min-height: 500px;
-  max-height: 500px;
-  overflow-y: scroll;
+.chat-container {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  min-height: 90vh;
 }
 
+.segment {
+  min-height: 90vh;
+}
 
 .messages {
     list-style-type: none;
