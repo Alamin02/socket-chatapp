@@ -1,6 +1,5 @@
 var socket = io();
 
-
 var username = $("#user").val();
 
 var message = {
@@ -9,12 +8,11 @@ var message = {
 };
 
 $(document).ready(function () {
-    console.log(username);
     socket.emit('new user', username);
 });
 
+
 $("#msg").keydown(function (event) {
-    console.log(event.which);
     if (event.which == 13) {
         message.text = $(this).val();
         message.sender = $("#user").val();
@@ -24,59 +22,42 @@ $("#msg").keydown(function (event) {
 });
 
 
-var pm = {
-    sender: "",
-    reciever: "",
-    text: ""
-};
-
-
-$("#pm").keydown(function (event) {
-    console.log(event.which);
-    if (event.which == 13) {
-        pm.sender = $("#username").val();
-        pm.reciever = $("#reciever").val();
-        pm.text = $(this).val();
-        $(this).val("");
-        socket.emit('new pm', pm);
-    }
-});
-
 socket.on('new user', function (user) {
-    $("#gc").append("<li>" + user.new + " entered the room..." + "</li>");
+    $("#gc").append(
+        `<li class="entry-info text-info">` +
+        user.new +
+        ` entered the room... </li>`
+    );
     updateScroll();
     updateUsers(user.userlist);
 });
 
 socket.on('user left', function (user) {
-    $("#gc").append("<li>" + user.left + " left the room..." + "</li>");
+    $("#gc").append(
+        `<li class="entry-info text-secondary">` +
+        user.left +
+        ` left the room... </li>`
+    );
     updateScroll();
     updateUsers(user.userlist);
 });
 
 
 socket.on('message rcvd', function (msg) {
-    console.log(msg);
-    $("#gc").append("<li>" + msg.sender + " says : " + msg.text + "</li>");
+    $("#gc").append(
+        `<li> <b>` + msg.sender + `: </b> ` + msg.text + `</li>`
+    );
     updateScroll();
 });
 
-socket.on('pm', function (msg) {
-    console.log(msg);
-});
-
-
 function updateScroll() {
-    console.log("called");
     var element = document.getElementById("group-chat");
     element.scrollTop = element.scrollHeight;
 }
 
 function updateUsers(users) {
-    console.log(users);
     $("#active-users").empty();
     for (var i = 0; i < users.length; i++) {
-        $("#active-users").append('<li class="list-group-item">' + users[i] + '</li>');
-
+        $("#active-users").append('<li class="list-group-item user-list-item">' + users[i] + '</li>');
     }
 }
