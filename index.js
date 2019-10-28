@@ -3,7 +3,6 @@ var express = require('express');
 // Init App
 var app = express();
 
-
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 var path = require('path');
@@ -50,7 +49,6 @@ var ids = [];
 
 //checks primary validity
 app.get('/validity', function (req, res) {
-	console.log(req.query.name);
 	var user_name = req.query.name;
 	if (userValidator(user_name)) {
 		var link = '/chat?user=' + user_name;
@@ -88,7 +86,6 @@ io.on('connection', function (socket) {
 			});
 		}
 		else {
-			console.log("user already exists");
 			socket.disconnect(socket.id);
 		}
 	});
@@ -110,16 +107,13 @@ io.on('connection', function (socket) {
 
 
 function userValidator(name) {
-	console.log(users);
 	if (users.indexOf(name) >= 0) {
-		console.log('Already exists');
 		return false;
 	}
 	else if (name.length < 3 && name.length > 10) {
 		return false;
 	}
 	else {
-		console.log('doesnot exist!');
 		return true;
 	}
 }
