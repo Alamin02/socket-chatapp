@@ -37,7 +37,6 @@ app.get('/', function (req, res) {
 app.get('/chat', function (req, res) {
 	var user_name = req.query;
 	if (!users[user_name]) {
-		console.log(user_name.user);
 		res.render('chat', user_name);
 	}
 });
@@ -71,11 +70,7 @@ app.get('/validity', function (req, res) {
 // Socket IO configuration for realtime chatting.
 
 io.on('connection', function (socket) {
-
-	console.log('User : ' + socket.id);
-
 	socket.on('new user', function (user) {
-
 		if (userValidator(user)) {
 			users.push(user);
 			ids.push(socket.id);
@@ -91,13 +86,11 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('new message', function (msg) {
-		console.log(msg);
 		io.emit('message rcvd', msg);
 	});
 
 	socket.on('disconnect', function (user) {
 		var userLeft = removeUserByID(socket.id);
-		console.log(userLeft + ' disconnected');
 		io.emit('user left', {
 			left: userLeft,
 			userlist: users
