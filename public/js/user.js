@@ -18,9 +18,9 @@ function enterRoom() {
 
   if (username) {
     $.get('validity', { name: username }, function (data) {
-      console.log(data)
       if (data.valid) {
-        var goto = "http://localhost:3000" + data.link;
+        let getUrl = window.location;
+        var goto = getUrl.protocol + "//" + getUrl.host + data.link;
         window.location.replace(goto);
       }
     });
